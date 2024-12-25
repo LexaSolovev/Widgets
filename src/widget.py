@@ -1,4 +1,4 @@
-import masks
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(data: str) -> str:
@@ -16,11 +16,20 @@ def mask_account_card(data: str) -> str:
     data_list = data.split()
     iscard = bool(len(data_list[-1]) == 16)
     if iscard:
-        data_list[-1] = masks.get_mask_card_number(data_list[-1])
+        data_list[-1] = get_mask_card_number(data_list[-1])
     else:
-        data_list[-1] = masks.get_mask_account(data_list[-1])
+        data_list[-1] = get_mask_account(data_list[-1])
     return " ".join(data_list)
+
+
+def get_date(date: str) -> str:
+    """
+    Функция принимает строку даты в формате "2024-03-11T02:26:18.671407"
+    Возвращает строку даты в формате "ДД.ММ.ГГГГ"
+    """
+    return date[8:10] + "." + date[5:7] + "." + date[:4]
 
 
 if __name__ == "__main__":
     print(mask_account_card("Visa Classic 6831982476737658"))
+    print(get_date("2024-03-11T02:26:18.671407"))
