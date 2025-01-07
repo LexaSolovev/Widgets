@@ -1,4 +1,5 @@
 from src.masks import get_mask_account, get_mask_card_number
 
-print(get_mask_card_number("1234567812345678"))
-print(get_mask_account("1234123412356567"))
+if __name__ == "__main__":
+    print(get_mask_card_number("1234567812345678"))
+    print(get_mask_account("1234123412356567"))
