@@ -1,8 +1,20 @@
+import re
+
+
 def get_mask_card_number(card_number: str) -> str:
     """Функция get_mask_card_number
      принимает на вход номер карты и возвращает ее маску. Номер карты замаскирован и отображается в формате
     XXXX XX** **** XXXX
     """
+    #проверка что передана строка
+    if not isinstance(card_number, str):
+        raise TypeError("Номер карты должен быть строкой")
+
+    #проверка соответствия номера карты шаблону
+    regex_card = re.compile(pattern="^([0-9]{4}) ([0-9]{4}) ([0-9]{4}) ([0-9]{4})$")
+    if not regex_card.match(card_number):
+        raise ValueError("Номер карты не соответствует формату")
+
     return card_number[:4] + " " + card_number[5:7] + "** **** " + card_number[-4:]
 
 
