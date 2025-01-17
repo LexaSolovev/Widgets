@@ -1,3 +1,4 @@
+import re
 from src.masks import get_mask_account, get_mask_card_number
 
 
@@ -13,11 +14,19 @@ def mask_account_card(data: str) -> str:
     Счет 73654108430135874305  # входной аргумент
     Счет **4305  # выход функции
     """
-    data_list = data.split()
-    iscard = bool(len(data_list[-1]) == 16)
-    if iscard:
-        data_list[-1] = get_mask_card_number(data_list[-1])
+    patern_card = re.compile(pattern="^[^0-9]+([0-9]{4}) ?([0-9]{4}) ?([0-9]{4}) ?([0-9]{4})$")
+    if patern_card.match(data):
+        pay_system = ""
+        for s in data:
+            if s.isdigit():
+                break
+            else:
+                pay_system += s
+        card_number = data.replace(" ", "")[-16:]
+        mask_card_number = get_mask_card_number(card_number)
+        return pay_system + mask_card_number
     else:
+        data_list = data.split()
         data_list[-1] = get_mask_account(data_list[-1])
     return " ".join(data_list)
 
