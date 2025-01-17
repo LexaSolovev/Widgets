@@ -18,3 +18,14 @@ def test_mask_account_card_valid_account(account):
 
 def test_mask_account_card_valid_card(card_number, expected):
     assert mask_account_card(card_number) == expected
+
+@pytest.mark.parametrize("invalid_type", [True,
+                                          1234,
+                                          (1,2),
+                                          {3:5},
+                                          [4,1]])
+
+
+def test_mask_account_card_invalid_type(invalid_type):
+    with pytest.raises(TypeError):
+        mask_account_card(invalid_type)

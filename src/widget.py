@@ -14,6 +14,8 @@ def mask_account_card(data: str) -> str:
     Счет 73654108430135874305  # входной аргумент
     Счет **4305  # выход функции
     """
+    if isinstance(data, str):
+        raise TypeError
     patern_card = re.compile(pattern="^[^0-9]+([0-9]{4}) ?([0-9]{4}) ?([0-9]{4}) ?([0-9]{4})$")
     if patern_card.match(data):
         pay_system = ""
