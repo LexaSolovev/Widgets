@@ -3,7 +3,7 @@ from src.masks import get_mask_account, get_mask_card_number
 
 @pytest.fixture
 def card_number():
-    return "1234 5678 9876 5432"
+    return "1234567898765432"
 
 @pytest.fixture
 def account():
@@ -31,7 +31,7 @@ def test_get_mask_card_number_invalid_type(invalid_card_type):
 @pytest.mark.parametrize("invalid_card_format", ["1234",
                                                  "asdf 1234 assdf 3214fsd",
                                                  "",
-                                                 "1234456677888854"])
+                                                 "12344566778888541"])
 
 
 def test_get_mask_card_number_invalid_format(invalid_card_format):
