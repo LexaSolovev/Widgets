@@ -29,3 +29,16 @@ def test_mask_account_card_valid_card(card_number, expected):
 def test_mask_account_card_invalid_type(invalid_type):
     with pytest.raises(TypeError):
         mask_account_card(invalid_type)
+
+
+@pytest.mark.parametrize("invalid_format", ["1234562345",
+                                            "Счет 12345",
+                                            "Visa 1234567891",
+                                            "",
+                                            "Master Card 123",
+                                            " 1234567898765432"])
+
+
+def test_mask_account_invalid_format(invalid_format):
+    with pytest.raises(ValueError):
+        mask_account_card(invalid_format)

@@ -14,9 +14,10 @@ def mask_account_card(data: str) -> str:
     Счет 73654108430135874305  # входной аргумент
     Счет **4305  # выход функции
     """
-    if isinstance(data, str):
-        raise TypeError
-    patern_card = re.compile(pattern="^[^0-9]+([0-9]{4}) ?([0-9]{4}) ?([0-9]{4}) ?([0-9]{4})$")
+    if not isinstance(data, str):
+        raise TypeError("Параметр data должен быть строкой")
+    patern_card = re.compile(pattern="^[^0-9, ]+ ([0-9]{4}) ?([0-9]{4}) ?([0-9]{4}) ?([0-9]{4})$")
+    patern_account = re.compile(pattern="^Счет [0-9]{9,18}$")
     if patern_card.match(data):
         pay_system = ""
         for s in data:
@@ -27,10 +28,12 @@ def mask_account_card(data: str) -> str:
         card_number = data.replace(" ", "")[-16:]
         mask_card_number = get_mask_card_number(card_number)
         return pay_system + mask_card_number
-    else:
+    elif patern_account.match(data):
         data_list = data.split()
         data_list[-1] = get_mask_account(data_list[-1])
-    return " ".join(data_list)
+        return " ".join(data_list)
+    else:
+        raise ValueError("Неверный формат данных")
 
 
 def get_date(date: str) -> str:
