@@ -38,19 +38,16 @@ def mask_account_card(data: str) -> str:
         raise ValueError("Неверный формат данных")
 
 
-def get_date(date: str) -> str:
+def get_date(date_input: str) -> str:
     """
     Функция принимает строку даты в формате "2024-03-11T02:26:18.671407"
     Возвращает строку даты в формате "ДД.ММ.ГГГГ"
     """
-    if not isinstance(date, str):
+    if not isinstance(date_input, str):
         raise TypeError("Неверный тип")
 
-    date_time = datetime.fromisoformat(date)
+    date_time = datetime.fromisoformat(date_input)
+    result = date_time.strftime("%d.%m.%Y")
 
-    return date_time.strftime("%d.%m.%Y")
+    return result
 
-
-if __name__ == "__main__":
-    print(mask_account_card("Visa Classic 6831982476737658"))
-    print(get_date("2024-03-11T02:26:18.671407"))
