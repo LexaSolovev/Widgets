@@ -63,6 +63,6 @@ def test_get_date_invalid_type(invalid_type):
                                               "2024-03-11T24:26:18.671407",
                                               "2024-03-11T02:60:18.671407",
                                               "2024-03-11T02:26:60.671407"])
-def test_get_date(invalid_datetime):
+def test_get_date_invalid_datetime(invalid_datetime):
     with pytest.raises(ValueError):
         get_date(invalid_datetime)
