@@ -6,8 +6,8 @@ def test_get_mask_card_number():
     assert get_mask_card_number("1234567898765432") == "1234 56** **** 5432"
 
 
-def test_get_mask_account(account):
-    assert get_mask_account(account) == "**4321"
+def test_get_mask_account():
+    assert get_mask_account("123456789987654321") == "**4321"
 
 
 @pytest.mark.parametrize("invalid_card_type", [1234,
