@@ -42,10 +42,10 @@ def get_date(date: str) -> str:
     Возвращает строку даты в формате "ДД.ММ.ГГГГ"
     """
     if not isinstance(date, str):
-        raise TypeError
+        raise TypeError("Неверный тип")
 
     if not is_valid_datetime(date):
-        raise ValueError
+        raise ValueError("Неверный формат данных")
 
     return date[8:10] + "." + date[5:7] + "." + date[:4]
 
