@@ -44,6 +44,9 @@ def get_date(date: str) -> str:
     if not isinstance(date, str):
         raise TypeError
 
+    if not is_valid_datetime(date):
+        raise ValueError
+
     return date[8:10] + "." + date[5:7] + "." + date[:4]
 
 
