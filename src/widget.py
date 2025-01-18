@@ -50,4 +50,3 @@ def get_date(date_input: str) -> str:
     result = date_time.strftime("%d.%m.%Y")
 
     return result
-
