@@ -1,5 +1,5 @@
 import pytest
-from src.widget import mask_account_card, get_date
+from src.widget import mask_account_card, get_date, is_valid_datetime
 
 @pytest.fixture
 def account():
@@ -62,3 +62,28 @@ def test_get_date(date):
 def test_get_date_invalid_type(invalid_type):
     with pytest.raises(TypeError):
         get_date(invalid_type)
+
+
+def test_is_valid_datetime(date):
+    assert is_valid_datetime(date) == True
+
+
+@pytest.mark.parametrize("invalid_datetime", ["2024-03-11T02:26:18",
+                                              "03-11T02:26:18.671407",
+                                              "2024-11T02:26:18.671407",
+                                              "2024-03-T02:26:18.671407",
+                                              "2024-03-11T:26:18.671407",
+                                              "2024-03-11T02::18.671407",
+                                              "2024-03-11T02:26:"
+                                              "2024-03-11"
+                                              "0024-03-11T02:26:18.671407",
+                                              "2024-13-11T02:26:18.671407",
+                                              "2024-03-00T02:26:18.671407",
+                                              "2024-03-32T02:26:18.671407",
+                                              "2024-03-11T24:26:18.671407",
+                                              "2024-03-11T02:60:18.671407",
+                                              "2024-03-11T02:26:60.671407",
+                                              "2024-03-11T02:26:18.6714071"])
+
+def test_is_valid_datetime(invalid_datetime):
+    assert is_valid_datetime(invalid_datetime) == False

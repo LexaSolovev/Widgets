@@ -51,8 +51,12 @@ def is_valid_datetime(date_str: str) -> bool:
     """Проверка формата даты 'YYYY-MM-DDTHH:MM:SS.mmmmmm' """
 
     # Регулярное выражение для проверки строки с датой и временем
-    pattern_date = """^(?P<year>\d{4})-(?P<month>0[1-9]|1[012])-(?P<day>0[1-9]|[12][0-9]|3[01])
-    T(?P<hour>[01][0-9]|2[0-3]):(?P<minute>[0-5][0-9]):(?P<second>[0-5][0-9])\.(?P<microseconds>\d{6})$"""
+    pattern_date = ("^(?P<year>\d{4})-"
+                    "(?P<month>0[1-9]|1[012])-"
+                    "(?P<day>0[1-9]|[12][0-9]|3[01])T"
+                    "(?P<hour>[01][0-9]|2[0-3]):"
+                    "(?P<minute>[0-5][0-9]):"
+                    "(?P<second>[0-5][0-9])\.(?P<microseconds>\d{6})$")
     match = re.match(pattern_date, date_str)
     if not match:
         return False
