@@ -1,5 +1,5 @@
 import pytest
-from src.widget import mask_account_card
+from src.widget import mask_account_card, get_date
 
 @pytest.fixture
 def account():
@@ -42,3 +42,11 @@ def test_mask_account_card_invalid_type(invalid_type):
 def test_mask_account_invalid_format(invalid_format):
     with pytest.raises(ValueError):
         mask_account_card(invalid_format)
+
+
+@pytest.fixture
+def date():
+    return ("2024-03-11T02:26:18.671407")
+
+def test_get_date(date):
+    assert get_date(date) == "11.03.2024"
