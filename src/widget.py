@@ -47,6 +47,39 @@ def get_date(date: str) -> str:
     return date[8:10] + "." + date[5:7] + "." + date[:4]
 
 
+def is_valid_datetime(date_str: str) -> bool:
+    """Проверка формата даты 'YYYY-MM-DDTHH:MM:SS.mmmmmm' """
+
+    # Регулярное выражение для проверки строки с датой и временем
+    pattern_date = """^(?P<year>\d{4})-(?P<month>0[1-9]|1[012])-(?P<day>0[1-9]|[12][0-9]|3[01])
+    T(?P<hour>[01][0-9]|2[0-3]):(?P<minute>[0-5][0-9]):(?P<second>[0-5][0-9])\.(?P<microseconds>\d{6})$"""
+    match = re.match(pattern_date, date_str)
+    if not match:
+        return False
+
+    # Дополнительные проверки на валидность значений
+    year = int(match.group('year'))
+    month = int(match.group('month'))
+    day = int(match.group('day'))
+    hour = int(match.group('hour'))
+    minute = int(match.group('minute'))
+    second = int(match.group('second'))
+
+    # Проверка диапазонов
+    if month < 1 or month > 12:
+        return False
+    if day < 1 or day > 31:
+        return False
+    if hour < 0 or hour > 23:
+        return False
+    if minute < 0 or minute > 59:
+        return False
+    if second < 0 or second > 59:
+        return False
+
+    return True
+
+
 if __name__ == "__main__":
     print(mask_account_card("Visa Classic 6831982476737658"))
     print(get_date("2024-03-11T02:26:18.671407"))
