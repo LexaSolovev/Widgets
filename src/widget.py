@@ -41,6 +41,9 @@ def get_date(date: str) -> str:
     Функция принимает строку даты в формате "2024-03-11T02:26:18.671407"
     Возвращает строку даты в формате "ДД.ММ.ГГГГ"
     """
+    if not isinstance(date, str):
+        raise TypeError
+
     return date[8:10] + "." + date[5:7] + "." + date[:4]
 
 

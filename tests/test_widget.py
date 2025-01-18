@@ -50,3 +50,15 @@ def date():
 
 def test_get_date(date):
     assert get_date(date) == "11.03.2024"
+
+
+@pytest.mark.parametrize("invalid_type", [True,
+                                          1234,
+                                          (1,2),
+                                          {3:5},
+                                          [4,1]])
+
+
+def test_get_date_invalid_type(invalid_type):
+    with pytest.raises(TypeError):
+        get_date(invalid_type)
