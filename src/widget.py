@@ -1,3 +1,6 @@
+import re
+from datetime import datetime
+
 from src.masks import get_mask_account, get_mask_card_number
 
 
@@ -13,23 +16,37 @@ def mask_account_card(data: str) -> str:
     Счет 73654108430135874305  # входной аргумент
     Счет **4305  # выход функции
     """
-    data_list = data.split()
-    iscard = bool(len(data_list[-1]) == 16)
-    if iscard:
-        data_list[-1] = get_mask_card_number(data_list[-1])
-    else:
+    if not isinstance(data, str):
+        raise TypeError("Параметр data должен быть строкой")
+    pattern_card = re.compile(pattern="^.+ ([0-9]{4}) ?([0-9]{4}) ?([0-9]{4}) ?([0-9]{4})$")
+    pattern_account = re.compile(pattern="^Счет [0-9]{9,18}$")
+    if pattern_card.match(data):
+        pay_system = ""
+        for s in data:
+            if s.isdigit():
+                break
+            else:
+                pay_system += s
+        card_number = data.replace(" ", "")[-16:]
+        mask_card_number = get_mask_card_number(card_number)
+        return pay_system + mask_card_number
+    elif pattern_account.match(data):
+        data_list = data.split()
         data_list[-1] = get_mask_account(data_list[-1])
-    return " ".join(data_list)
+        return " ".join(data_list)
+    else:
+        raise ValueError("Неверный формат данных")
 
 
-def get_date(date: str) -> str:
+def get_date(date_input: str) -> str:
     """
     Функция принимает строку даты в формате "2024-03-11T02:26:18.671407"
     Возвращает строку даты в формате "ДД.ММ.ГГГГ"
     """
-    return date[8:10] + "." + date[5:7] + "." + date[:4]
+    if not isinstance(date_input, str):
+        raise TypeError("Неверный тип")
 
+    date_time = datetime.fromisoformat(date_input)
+    result = date_time.strftime("%d.%m.%Y")
 
-if __name__ == "__main__":
-    print(mask_account_card("Visa Classic 6831982476737658"))
-    print(get_date("2024-03-11T02:26:18.671407"))
+    return result
