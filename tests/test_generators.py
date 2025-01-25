@@ -1,5 +1,5 @@
 import pytest
-from src.generators import filter_by_currency, transaction_descriptions
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 
 def test_filter_by_currency_usd(transactions):
@@ -121,4 +121,18 @@ def test_transaction_description_empty_transactions():
         next(descriptions)
 
 
+def test_card_number_generator():
+    card_numbers = card_number_generator(1, 5)
+    assert next(card_numbers) == "0000 0000 0000 0001"
+    assert next(card_numbers) == "0000 0000 0000 0002"
+    assert next(card_numbers) == "0000 0000 0000 0003"
+    assert next(card_numbers) == "0000 0000 0000 0004"
+    assert next(card_numbers) == "0000 0000 0000 0005"
+
+    card_numbers = card_number_generator(10001, 10005)
+    assert next(card_numbers) == "0000 0000 0001 0001"
+    assert next(card_numbers) == "0000 0000 0001 0002"
+    assert next(card_numbers) == "0000 0000 0001 0003"
+    assert next(card_numbers) == "0000 0000 0001 0004"
+    assert next(card_numbers) == "0000 0000 0001 0005"
 
