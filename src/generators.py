@@ -5,7 +5,7 @@ def filter_by_currency(transactions: list[dict], currency_code: str):
         return None
     else:
         for transaction in generator:
-            yield dict(transaction)
+            yield transaction
 
 
 
