@@ -11,6 +11,7 @@ def filter_by_currency(transactions: list[dict], currency_code: str) -> Generato
 
 
 def transaction_descriptions(transactions: list[dict]) -> Generator[str, None, None]:
+    """Функция принимает список транзакций и возвращает генератор, который поочередно возвращает описание транзакций"""
     descriptions = (transaction.get("description") for transaction in transactions)
     for description in descriptions:
         yield description
