@@ -168,12 +168,18 @@ def test_filter_by_currency_rub(transactions):
 
 
 def test_filter_by_currency_empty():
-    transactions_iter = filter_by_currency([],"USD")
     with pytest.raises(StopIteration):
+        transactions_iter = filter_by_currency([{}],"USD")
         next(transactions_iter)
 
 
 def test_filter_by_currency_no_currency():
-    transactions_iter = filter_by_currency([1, 2], "USD")
-    with pytest.raises(AttributeError):
+    with pytest.raises(StopIteration):
+        transactions_iter = filter_by_currency([{1: 2}], "USD")
+        next(transactions_iter)
+
+
+def test_filter_by_currency_no_current_currency(transactions):
+    with pytest.raises(StopIteration):
+        transactions_iter = filter_by_currency(transactions, "EUR")
         next(transactions_iter)
