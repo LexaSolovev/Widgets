@@ -25,6 +25,9 @@ def card_number_generator(start: int, stop: int) -> Generator[str, None, None]:
 
 
 def format_card_number(input_str: str) -> str:
-    """Преобразует строку вида "1234567812345678" в строку номера карты - "1234 5678 1234 5678" """
+    """
+    Вспомогательная функция.
+    Преобразует строку вида "1234567812345678" в формат номера карты - "1234 5678 1234 5678"
+    """
     return input_str[:4] + " " + input_str[4:8] + " " + input_str[8:12] + " " + input_str[12:]
 
