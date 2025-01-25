@@ -1,7 +1,11 @@
 def filter_by_currency(transactions: list[dict], currency_code: str):
-    generator = (transaction for transaction in transactions if transaction.get("operationAmount").get("currency").get("code") == currency_code)
-    for transaction in generator:
-        yield dict(transaction)
+    try:
+        generator = (transaction for transaction in transactions if transaction.get("operationAmount").get("currency").get("code") == currency_code)
+    except (AttributeError, StopIteration):
+        return None
+    else:
+        for transaction in generator:
+            yield dict(transaction)
 
 
 
