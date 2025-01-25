@@ -10,8 +10,10 @@ def filter_by_currency(transactions: list[dict], currency_code: str) -> Generato
         yield transaction
 
 
-def transaction_descriptions(transactions):
-    pass
+def transaction_descriptions(transactions: list[dict]) -> Generator[str, None, None]:
+    descriptions = (transaction.get("description") for transaction in transactions)
+    for description in descriptions:
+        yield description
 
 
 def card_number_generator(start, stop):
