@@ -104,3 +104,21 @@ def test_filter_by_currency_no_current_currency(transactions):
     with pytest.raises(StopIteration):
         transactions_iter = filter_by_currency(transactions, "EUR")
         next(transactions_iter)
+
+
+def test_transaction_description(transactions):
+    descriptions = transaction_descriptions(transactions)
+    assert next(descriptions) == "Перевод организации"
+    assert next(descriptions) == "Перевод со счета на счет"
+    assert next(descriptions) == "Перевод со счета на счет"
+    assert next(descriptions) == "Перевод с карты на карту"
+    assert next(descriptions) == "Перевод организации"
+
+
+def test_transaction_description_empty_transactions():
+    with pytest.raises(StopIteration):
+        descriptions = transaction_descriptions([])
+        next(descriptions)
+
+
+
