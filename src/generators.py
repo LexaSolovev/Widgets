@@ -18,6 +18,19 @@ def transaction_descriptions(transactions: list[dict]) -> Generator[str, None, N
 
 
 def card_number_generator(start: int, stop: int) -> Generator[str, None, None]:
+    """
+    Функция принимает интервал целых чисел и генерирует номера карт в этом диапазоне
+    Например:
+    for card_number in card_number_generator(1, 5):
+    print(card_number)
+
+>>> 0000 0000 0000 0001
+    0000 0000 0000 0002
+    0000 0000 0000 0003
+    0000 0000 0000 0004
+    0000 0000 0000 0005
+
+    """
     result_str = "0123 4567 8901 2345"
     nums = (format_card_number('{:0{length}}'.format(x, length=16)) for x in range(start, stop + 1))
     for num in nums:
