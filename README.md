@@ -48,6 +48,33 @@
    
     Функция сортирует список словарей по дате
 
+4. Модуль **src/generators**
+
+      **filter_by_currency**(transactions: list[dict], currency_code: str) -> Generator[dict, None, None]
+      Функция принимает список транзакций и возвращает генератор,который поочередно возвращает транзакции с определенной валютой
+
+      **transaction_descriptions**(transactions: list[dict]) -> Generator[str, None, None]
+      Функция принимает список транзакций и возвращает генератор, который поочередно возвращает описание транзакций
+
+      **card_number_generator**(start: int, stop: int) -> Generator[str, None, None]:
+      Функция принимает интервал целых чисел и генерирует номера карт в этом диапазоне.
+
+      Например:
+
+      ```python
+      for card_number in card_number_generator(1, 5):
+          print(card_number)
+      ```
+   
+       0000 0000 0000 0001
+       0000 0000 0000 0002
+       0000 0000 0000 0003
+       0000 0000 0000 0004
+       0000 0000 0000 0005
+      
+ 
+    
+
 ## Тестирование   
 
 Все тесты находятся в пакете tests. 
