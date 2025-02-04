@@ -13,7 +13,7 @@ def test_log_console(capsys):
     assert "Результат выполнения функции:" in str_in_console.out
 
 
-def test_log_console_exсept(capsys):
+def test_log_console_except(capsys):
     @log()
     def exeptor():
         raise Exception("Тестовая ошибка")
