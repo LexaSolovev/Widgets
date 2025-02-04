@@ -1,4 +1,5 @@
 from src.decorators import log
+from os import remove
 
 def test_log_console(capsys):
     @log()
@@ -38,3 +39,4 @@ def test_log_file():
         assert "Начало запуска функции summator:" in str_in_file
         assert "Функция выполнена успешно за" in str_in_file
         assert "Результат выполнения функции:" in str_in_file
+    remove("temp.txt")
