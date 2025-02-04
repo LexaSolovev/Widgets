@@ -23,3 +23,18 @@ def test_log_console_except(capsys):
         exeptor()
     except:
         assert "При выполнении функции exeptor c параметрами () произошла ошибка:\nТестовая ошибка" in capsys.readouterr().out
+
+
+def test_log_file():
+    @log("temp.txt")
+    def summator(*args):
+        return sum(args)
+
+
+    result = summator(1, 2, 3, 4)
+    with open("temp.txt", "r") as file:
+        str_in_file = file.read()
+        assert result == 10
+        assert "Начало запуска функции summator:" in str_in_file
+        assert "Функция выполнена успешно за" in str_in_file
+        assert "Результат выполнения функции:" in str_in_file
