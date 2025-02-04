@@ -31,12 +31,3 @@ def log(file_name: str="") -> Callable:
         return wrapper
 
     return inner
-
-@log()
-def summator(*args):
-   # raise Exception
-    return sum(args)
-
-
-if __name__ == "__main__":
-   summator(1,2)
