@@ -19,7 +19,7 @@ def convert_amount_by_currency(cur_from:str, cur_to:str, amount:float) -> float:
     result = response.json()
 
     if status_code == 200:
-        return result["result"]
+        return float(result["result"])
     else:
         raise requests.exceptions.RequestException(f"Ошибка запроса, статус-код: {status_code}, сообщение: {result}")
 
