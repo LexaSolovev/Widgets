@@ -12,6 +12,16 @@ def get_transactions_from_json(path_to_json:str) -> list[dict]:
     return json_obj
 
 
+def get_amount(transaction:dict, currency:str="RUB") -> float:
+    """Функция возвращает сумму транзакции в нужной валюте currency: "RUB" или "USD" или "EUR" """
+    transaction_currency = transaction.get("operationAmount",{}).get("currency",{}).get("code","")
+    transaction_amount = float(transaction.get("operationAmount",{}).get("amount",0))
+    if transaction_currency == currency:
+        return transaction_amount
+    else:
+        pass
+
+
 if __name__ == "__main__":
     operations_path = os.path.join(PATH_DATA, "operations.json")
     print(get_transactions_from_json(operations_path))
