@@ -1,9 +1,10 @@
 import os
-from dotenv import load_dotenv
+
 import requests
+from dotenv import load_dotenv
 
 
-def convert_amount_by_currency(cur_from:str, cur_to:str, amount:float) -> float:
+def convert_amount_by_currency(cur_from: str, cur_to: str, amount: float) -> float:
 
     load_dotenv()
     api_key = os.getenv("API_KEY")
@@ -11,9 +12,9 @@ def convert_amount_by_currency(cur_from:str, cur_to:str, amount:float) -> float:
     url = f"https://api.apilayer.com/exchangerates_data/convert?to={cur_to}&from={cur_from}&amount={amount}"
 
     payload = {}
-    headers= {"apikey": api_key}
+    headers = {"apikey": api_key}
 
-    response = requests.request("GET", url, headers=headers, data = payload)
+    response = requests.request("GET", url, headers=headers, data=payload)
 
     status_code = response.status_code
     result = response.json()
@@ -25,4 +26,4 @@ def convert_amount_by_currency(cur_from:str, cur_to:str, amount:float) -> float:
 
 
 if __name__ == "__main__":
-    print(convert_amount_by_currency("RUB","USD", 100))
+    print(convert_amount_by_currency("RUB", "USD", 100))

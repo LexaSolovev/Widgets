@@ -1,7 +1,6 @@
 from datetime import datetime
 from functools import wraps
 from time import time
-from typing import Callable, Any
 
 
 def log(file_name: str = ""):
