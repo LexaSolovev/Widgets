@@ -2,9 +2,8 @@ import json
 import logging
 import os
 
+from config import PATH_DATA, PATH_LOGS
 from src.external_api import convert_amount_by_currency
-
-from config import PATH_LOGS, PATH_DATA
 
 utils_logger = logging.getLogger("utils")
 file_handler = logging.FileHandler(os.path.join(PATH_LOGS, "utils.log"))
@@ -40,8 +39,7 @@ def get_amount(transaction: dict, currency: str = "RUB") -> float:
         )
         return transaction_amount
     else:
-        utils_logger.info(f"Требуется конвертация валюты из {transaction_currency} в {currency}"
-        )
+        utils_logger.info(f"Требуется конвертация валюты из {transaction_currency} в {currency}")
         return convert_amount_by_currency(transaction_currency, currency, transaction_amount)
 
 

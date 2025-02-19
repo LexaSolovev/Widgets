@@ -1,5 +1,6 @@
-import os
 import logging
+import os
+
 import requests
 from dotenv import load_dotenv
 
@@ -11,6 +12,7 @@ file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(me
 file_handler.setFormatter(file_formatter)
 api_logger.addHandler(file_handler)
 api_logger.setLevel(logging.INFO)
+
 
 def convert_amount_by_currency(cur_from: str, cur_to: str, amount: float) -> float:
 
@@ -30,7 +32,6 @@ def convert_amount_by_currency(cur_from: str, cur_to: str, amount: float) -> flo
 
     status_code = response.status_code
     result = response.json()
-
 
     if status_code == 200:
         return float(result["result"])

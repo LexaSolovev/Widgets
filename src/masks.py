@@ -1,6 +1,6 @@
+import logging
 import os
 import re
-import logging
 
 from config import PATH_LOGS
 
@@ -64,6 +64,7 @@ def get_mask_account(account_number: str) -> str:
     result = "**" + account_number[-4:]
     masks_logger.info(f"Функция get_mask_account с параметром {account_number} вернула значение {result}")
     return result
+
 
 if __name__ == "__main__":
     get_mask_account("123456789987654321")
