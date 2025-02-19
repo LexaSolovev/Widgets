@@ -1,7 +1,7 @@
 from unittest.mock import Mock
 
-import src.utills
-from src.utills import get_amount, get_transactions_from_json
+import src.utils
+from src.utils import get_amount, get_transactions_from_json
 
 
 def test_get_amount_usd():
