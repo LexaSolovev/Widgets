@@ -60,8 +60,6 @@ def get_transactions_from_excel(path_to_excel: str) -> list[dict]:
     return json.loads(transactions_df.to_json(orient='records', force_ascii='list[dict]'))
 
 
-
-
 if __name__ == "__main__":
     # path_to_json = os.path.join(PATH_DATA, "operations.json")
     # transactions = get_transactions_from_json(path_to_json)
@@ -70,5 +68,3 @@ if __name__ == "__main__":
     # print(get_transactions_from_csv(path_to_csv)[0:4])
     path_to_excel = os.path.join(PATH_DATA, "transactions_excel.xlsx")
     print(get_transactions_from_excel(path_to_excel)[0:4])
-
-
