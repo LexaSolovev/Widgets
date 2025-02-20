@@ -57,7 +57,7 @@ def get_transactions_from_excel(path_to_excel: str) -> list[dict]:
     """Функция принимает путь до EXCEL файла и возвращает данные о транзакциях в виде списка словарей"""
 
     transactions_df = pd.read_excel(path_to_excel, )
-    return json.loads(transactions_df.to_json(orient='records', force_ascii='list[dict]'))
+    return json.loads(transactions_df.to_json(orient='records'))
 
 
 if __name__ == "__main__":
