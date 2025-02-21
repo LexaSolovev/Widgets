@@ -1,7 +1,7 @@
 from unittest.mock import Mock
 
 import src.utils
-from src.utils import get_amount, get_transactions_from_json
+from src.utils import get_amount
 
 
 def test_get_amount_usd():
@@ -38,4 +38,3 @@ def test_get_amount_rub():
                 }
         }
     ) == 8221.37
-
