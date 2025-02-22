@@ -6,7 +6,7 @@ from src.utils import get_amount
 
 def test_get_amount_usd():
     mock_amount = Mock(return_value=822137.0)
-    src.utills.convert_amount_by_currency = mock_amount
+    src.utils.convert_amount_by_currency = mock_amount
     assert get_amount(
         {
             "operationAmount":
@@ -24,7 +24,7 @@ def test_get_amount_usd():
 
 def test_get_amount_rub():
     mock_amount = Mock(return_value=822137.0)
-    src.utills.convert_amount_by_currency = mock_amount
+    src.utils.convert_amount_by_currency = mock_amount
     assert get_amount(
         {
             "operationAmount":
