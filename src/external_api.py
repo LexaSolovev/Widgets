@@ -15,6 +15,10 @@ api_logger.setLevel(logging.INFO)
 
 
 def convert_amount_by_currency(cur_from: str, cur_to: str, amount: float) -> float:
+    """
+    Функция конвертирует сумму - amount из валюты cur_from в валюту cur_to при помощи http-сервиса
+    https://api.apilayer.com/exchangerates_data/convert
+    """
 
     load_dotenv()
     api_key = os.getenv("API_KEY")
