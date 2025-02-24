@@ -41,8 +41,8 @@ def main():
     #Выбор режима фильтрации
     while True:
         print("""
-        Введите статус, по которому необходимо выполнить фильтрацию. 
-        Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING
+Введите статус, по которому необходимо выполнить фильтрацию. 
+Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING
         """)
         ui_filter = input().upper()
         if ui_filter == "EXECUTED":
@@ -122,27 +122,36 @@ def main():
         return
 
     for transaction in transactions:
-        output_date = get_date(transaction.get('date',""))
-        output_description = transaction.get('description',"")
+        if ui_menu == "1":
+            transaction_currency_name = transaction.get('operationAmount', {}).get('currency', {}).get('name', "")
+            transaction_currency_code = transaction.get('operationAmount', {}).get('currency', {}).get('code', "")
+            transaction_sum = transaction.get('operationAmount', {}).get('amount', "")
+        elif ui_menu in ("2", "3"):
+            transaction_currency_name = transaction.get('currency_name', "")
+            transaction_currency_code = transaction.get('currency_code', "")
+            transaction_sum = transaction.get('amount', "")
 
-        print(f"{output_date} {output_description}")
+        if is_only_rub == False or transaction_currency_code == 'RUB':
 
-        transaction_from = transaction.get('from',"")
-        transaction_to = transaction.get('to',"")
-        transaction_to = mask_account_card(transaction_to)
-        if transaction_from:
-            transaction_from = mask_account_card(transaction_from)
-            output_from_to = f"{transaction_from} -> {transaction_to}"
-        else:
-            output_from_to = f"{transaction_to}"
+            output_date = get_date(transaction.get('date',""))
+            output_description = transaction.get('description',"")
 
-        print(output_from_to)
+            print(f"{output_date} {output_description}")
 
-        transaction_sum = transaction.get('operationAmount',{}).get('amount',"")
-        transaction_currency = transaction.get('operationAmount',{}).get('currency',{}).get('name',"")
-        output_sum = f"Сумма: {transaction_sum} {transaction_currency}"
+            transaction_from = transaction.get('from',"")
+            transaction_to = transaction.get('to',"")
+            transaction_to = mask_account_card(transaction_to)
+            if transaction_from:
+                transaction_from = mask_account_card(transaction_from)
+                output_from_to = f"{transaction_from} -> {transaction_to}"
+            else:
+                output_from_to = f"{transaction_to}"
 
-        print(output_sum)
+            print(output_from_to)
+
+            output_sum = f"Сумма: {transaction_sum} {transaction_currency_name}"
+
+            print(output_sum)
 
 
 if __name__ == "__main__":

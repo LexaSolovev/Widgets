@@ -19,7 +19,7 @@ def mask_account_card(data: str) -> str:
     if not isinstance(data, str):
         raise TypeError("Параметр data должен быть строкой")
     pattern_card = re.compile(pattern="^.+ ([0-9]{4}) ?([0-9]{4}) ?([0-9]{4}) ?([0-9]{4})$")
-    pattern_account = re.compile(pattern="^Счет [0-9]{9,18}$")
+    pattern_account = re.compile(pattern="^Счет [0-9]{9,20}$")
     if pattern_card.match(data):
         pay_system = ""
         for s in data:
