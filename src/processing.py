@@ -31,3 +31,13 @@ def filter_by_description(transactions: list[dict], search_str: str) -> list[dic
             result.append(transaction)
 
     return result
+
+
+def count_transactions(transactions: list[dict], descriptions: list[str]) -> dict:
+    """
+    Функция для подсчета количества операций определенного типа.
+    Принимает список транзакций transactions и список описаний descriptions вида ['description_1', ..., 'description_n']
+    Возвращает словарь вида {'description_1': count_1, ..., 'description_n': count_n}
+    """
+
+    pass

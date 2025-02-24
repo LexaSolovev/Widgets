@@ -1,6 +1,6 @@
 import pytest
 
-from src.processing import filter_by_state, sort_by_date, filter_by_description
+from src.processing import filter_by_state, sort_by_date, filter_by_description, count_transactions
 
 
 @pytest.fixture
@@ -94,3 +94,10 @@ def test_filter_by_description(transactions):
             "to": "Счет 14211924144426031657"
         }
     ]
+
+
+def test_count_transactions(transactions):
+    assert count_transactions(transactions, ["Перевод организации","Перевод со счета на счет"]) == {
+        "Перевод организации": 2,
+        "Перевод со счета на счет": 2
+    }
