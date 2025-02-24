@@ -1,7 +1,8 @@
+import csv
 import json
 import logging
 import os
-import csv
+
 import pandas as pd
 
 from config import PATH_DATA, PATH_LOGS

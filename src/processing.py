@@ -27,7 +27,7 @@ def filter_by_description(transactions: list[dict], search_str: str) -> list[dic
     result = []
 
     for transaction in transactions:
-        description = transaction.get("description","").lower()
+        description = transaction.get("description", "").lower()
         if search_reg.match(description):
             result.append(transaction)
 
@@ -37,7 +37,8 @@ def filter_by_description(transactions: list[dict], search_str: str) -> list[dic
 def filter_by_descriptions_list(transactions: list[dict], descriptions: list[str]) -> list[dict]:
     """
     Функция для фильтра списка транзакций по списку описаний.
-    Принимает список транзакций transactions и список описаний descriptions вида ['description_1', ..., 'description_n']
+    Принимает список транзакций transactions и список описаний descriptions вида:
+    ['description_1', ..., 'description_n']
     Возвращает список транзакций, с подходящими описаниями
     """
     result = []
@@ -50,12 +51,10 @@ def filter_by_descriptions_list(transactions: list[dict], descriptions: list[str
 def count_transactions(transactions: list[dict], descriptions: list[str]) -> dict:
     """
     Функция для подсчета количества операций определенного типа.
-    Принимает список транзакций transactions и список описаний descriptions вида ['description_1', ..., 'description_n']
+    Принимает список транзакций transactions и список описаний descriptions вида:
+    ['description_1', ..., 'description_n']
     Возвращает словарь вида {'description_1': count_1, ..., 'description_n': count_n}
     """
 
     counted = Counter(t.get("description") for t in filter_by_descriptions_list(transactions, descriptions))
     return dict(counted)
-
-
-

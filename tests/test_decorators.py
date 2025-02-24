@@ -1,5 +1,6 @@
-from src.decorators import log
 from os import remove
+
+from src.decorators import log
 
 
 def test_log_console(capsys):
