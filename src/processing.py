@@ -1,5 +1,6 @@
 import re
-
+from collections import Counter
+from itertools import chain
 
 
 def filter_by_state(data: list[dict], state: str = 'EXECUTED') -> list[dict]:
@@ -33,6 +34,19 @@ def filter_by_description(transactions: list[dict], search_str: str) -> list[dic
     return result
 
 
+def filter_by_descriptions_list(transactions: list[dict], descriptions: list[str]) -> list[dict]:
+    """
+    Функция для фильтра списка транзакций по списку описаний.
+    Принимает список транзакций transactions и список описаний descriptions вида ['description_1', ..., 'description_n']
+    Возвращает список транзакций, с подходящими описаниями
+    """
+    result = []
+    for description in descriptions:
+        result = chain(result, filter_by_description(transactions, description))
+
+    return result
+
+
 def count_transactions(transactions: list[dict], descriptions: list[str]) -> dict:
     """
     Функция для подсчета количества операций определенного типа.
@@ -40,4 +54,8 @@ def count_transactions(transactions: list[dict], descriptions: list[str]) -> dic
     Возвращает словарь вида {'description_1': count_1, ..., 'description_n': count_n}
     """
 
-    pass
+    counted = Counter(t.get("description") for t in filter_by_descriptions_list(transactions, descriptions))
+    return dict(counted)
+
+
+
