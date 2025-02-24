@@ -44,7 +44,7 @@ def filter_by_descriptions_list(transactions: list[dict], descriptions: list[str
     for description in descriptions:
         result = chain(result, filter_by_description(transactions, description))
 
-    return result
+    return list(result)
 
 
 def count_transactions(transactions: list[dict], descriptions: list[str]) -> dict:
