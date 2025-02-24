@@ -1,6 +1,7 @@
 from src.decorators import log
 from os import remove
 
+
 def test_log_console(capsys):
     @log()
     def summator(*args):
@@ -19,18 +20,18 @@ def test_log_console_except(capsys):
     def exeptor():
         raise Exception("Тестовая ошибка")
 
-
     try:
         exeptor()
-    except:
-        assert "При выполнении функции exeptor c параметрами () произошла ошибка:\nТестовая ошибка" in capsys.readouterr().out
+
+    except Exception:
+        assert ("При выполнении функции exeptor c параметрами "
+                "() произошла ошибка:\nТестовая ошибка") in capsys.readouterr().out
 
 
 def test_log_file():
     @log("temp.txt")
     def summator(*args):
         return sum(args)
-
 
     result = summator(1, 2, 3, 4)
     with open("temp.txt", "r") as file:
