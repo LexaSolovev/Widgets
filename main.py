@@ -1,32 +1,148 @@
+import os.path
+
+from config import PATH_DATA
 from src.masks import get_mask_account, get_mask_card_number
-from src.processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state, sort_by_date, filter_by_description
+from src.utils import get_transactions_from_json, get_transactions_from_csv, get_transactions_from_excel
+from src.widget import get_date, mask_account_card
 
 
 def main():
     #Приветствие и выбор меню
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
     menu = {
-        1: "1. Получить информацию о транзакциях из JSON-файла",
-        2: "2. Получить информацию о транзакциях из CSV-файла",
-        3: "3. Получить информацию о транзакциях из XLSX-файла",
+        "1": "1. Получить информацию о транзакциях из JSON-файла",
+        "2": "2. Получить информацию о транзакциях из CSV-файла",
+        "3": "3. Получить информацию о транзакциях из XLSX-файла",
     }
     str_menu = "\n".join(menu.values())
     while True:
         print("Выберите необходимый пункт меню:")
         print(str_menu)
-        user_input_menu = int(input())
-        if not user_input_menu in menu.keys():
+        ui_menu = input()
+        if not ui_menu in menu.keys():
             print(f"Неверный ввод! Ожидаются цифры {list(menu.keys())}!")
             continue
         else:
             break
-    print(f"Выбор сделан: {menu[user_input_menu]}")
+    print(f"Выбор сделан: {menu[ui_menu]}")
+
+    transactions = []
+    if ui_menu == "1":
+        path = os.path.join(PATH_DATA, "operations.json")
+        transactions = get_transactions_from_json(path)
+    elif ui_menu == "2":
+        path = os.path.join(PATH_DATA, "transactions.csv")
+        transactions = get_transactions_from_csv(path)
+    elif ui_menu == "3":
+        path = os.path.join(PATH_DATA, "transactions_excel.xlsx")
+        transactions = get_transactions_from_excel(path)
 
     #Выбор режима фильтрации
+    while True:
+        print("""
+        Введите статус, по которому необходимо выполнить фильтрацию. 
+        Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING
+        """)
+        ui_filter = input().upper()
+        if ui_filter == "EXECUTED":
+            print('Операции отфильтрованы по статусу "EXECUTED"')
+            break
+        elif ui_filter == "CANCELED":
+            print('Операции отфильтрованы по статусу "CANCELED"')
+            break
+        elif ui_filter == "PENDING":
+            print('Операции отфильтрованы по статусу "PENDING"')
+            break
+        else:
+            print(f"Статус операции {ui_filter} не определен")
 
+    transactions = filter_by_state(transactions, state=ui_filter)
 
+    #Выбор опции сортировки по дате
+    while True:
+        print("""Отсортировать операции по дате? Да/Нет""")
+        ui_sort_by_date = input().lower()
+        if ui_sort_by_date == "да":
+            is_sort_by_date = True
+            break
+        elif ui_sort_by_date == "нет":
+            is_sort_by_date = False
+            break
+        else:
+            print("Некорректный ввод!")
 
-    #
+    #Выбор опции сортировки reverse_option = True - по-возрастанию, False - по-убыванию
+    if is_sort_by_date:
+        while True:
+            print("Отсортировать по возрастанию(1) или по убыванию(2)?")
+            ui_reverse = input()
+            if ui_reverse == '1':
+                reverse_option = True
+                break
+            elif ui_reverse == '2':
+                reverse_option = False
+                break
+            else:
+                print("Некорректный ввод!")
+        transactions = sort_by_date(transactions, reverse_option=reverse_option)
+
+    #Выбор опции вывода только рублевых транзакций is_only_rub = True/False
+    is_only_rub = False
+    while True:
+        print("Выводить только рублевые транзакции? Да/Нет")
+        ui_only_rub = input().lower()
+        if ui_only_rub == "да":
+            is_only_rub = True
+            break
+        elif ui_only_rub == "нет":
+            break
+        else:
+            print("Некорректный ввод!")
+
+    #Выбор режима фильтрации по описанию filter_description
+    filter_description = ""
+    while True:
+        print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет")
+        ui_filter_description = input().lower()
+        if ui_filter_description == "да":
+            filter_description = input("Введите текст для фильтрации:")
+            break
+        elif ui_filter_description == "нет":
+            break
+        else:
+            print("Некорректный ввод!")
+
+    if filter_description:
+        transactions = filter_by_description(transactions, search_str=filter_description)
+
+    #Вывод итогового списка транзакций
+    if not len(transactions):
+        print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+        return
+
+    for transaction in transactions:
+        output_date = get_date(transaction.get('date',""))
+        output_description = transaction.get('description',"")
+
+        print(f"{output_date} {output_description}")
+
+        transaction_from = transaction.get('from',"")
+        transaction_to = transaction.get('to',"")
+        transaction_to = mask_account_card(transaction_to)
+        if transaction_from:
+            transaction_from = mask_account_card(transaction_from)
+            output_from_to = f"{transaction_from} -> {transaction_to}"
+        else:
+            output_from_to = f"{transaction_to}"
+
+        print(output_from_to)
+
+        transaction_sum = transaction.get('operationAmount',{}).get('amount',"")
+        transaction_currency = transaction.get('operationAmount',{}).get('currency',{}).get('name',"")
+        output_sum = f"Сумма: {transaction_sum} {transaction_currency}"
+
+        print(output_sum)
 
 
 if __name__ == "__main__":
