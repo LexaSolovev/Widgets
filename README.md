@@ -4,19 +4,21 @@
 ###Реализованы следующие функции:
 1. Модуль **src/masks.py**:
    
-   **get_mask_card_number**(card_number: str) -> str
-   
+    **get_mask_card_number**(card_number: str) -> str
+
     Функция принимает на вход номер карты и возвращает ее маску. Номер карты замаскирован и отображается в формате
     XXXX XX** **** XXXX
 
-   **get_mask_account**(account_number: str) -> str
+    **get_mask_account(account_number: str) -> str**
 
-   Функция принимает на вход номер счета и возвращает его маску. Номер счета замаскирован и отображается в формате
+    Функция принимает на вход номер счета и возвращает его маску. Номер счета замаскирован и отображается в формате
     **XXXX
+
+
 2. Модуль **src/widget.py**
 
    **mask_account_card**(data: str) -> str
-    
+
     Функция принимает строку с названием карты/счета и номером карты/счета.
     Возвращает строку с зашифрованными номерами
 
@@ -32,12 +34,13 @@
    
     Счет **4305  - выход функции
 
-   **get_date**(date: str) -> str:
+   **get_date**(date: str) -> str
     
     Функция принимает строку даты в формате "2024-03-11T02:26:18.671407"
    
     Возвращает строку даты в формате "ДД.ММ.ГГГГ"
    
+
 3. Модуль **src/processing.py**
    
    **filter_by_state**(data: list[dict], state: str = 'EXECUTED') -> list[dict]
@@ -47,6 +50,24 @@
    **sort_by_date**(data: list[dict], reverse_option: bool = True) -> list[dict]
    
     Функция сортирует список словарей по дате
+
+   **filter_by_description(transactions: list[dict], search_str: str) -> list[dict]:**
+    Функция принимает список транзакций transactions и строку поиска search_str,
+    возвращает список транзакций, у которых описание содержит строку поиска
+
+   **filter_by_descriptions_list(transactions: list[dict], descriptions: list[str]) -> list[dict]:**
+    
+   Функция для фильтра списка транзакций по списку описаний.
+   Принимает список транзакций transactions и список описаний descriptions вида:
+   ['description_1', ..., 'description_n']
+   Возвращает список транзакций, с подходящими описаниями
+   
+   **count_transactions(transactions: list[dict], descriptions: list[str]) -> dict:**
+    Функция для подсчета количества операций определенного типа.
+    Принимает список транзакций transactions и список описаний descriptions вида:
+    ['description_1', ..., 'description_n']
+    Возвращает словарь вида {'description_1': count_1, ..., 'description_n': count_n}
+    
 
 4. Модуль **src/generators**
 
@@ -72,12 +93,14 @@
        0000 0000 0000 0004
        0000 0000 0000 0005
       
+
 5. Модуль **src/decorators**
 
    log(file_name: str = "")
    Декоратор логирует выполнение функции.
    Если указан параметр file_name, то создается или дописывается файл с этим именем
    Если параметр не указан, то логирование осуществляется в консоль
+
 
 6. Модуль **src/utills**
 
@@ -94,6 +117,7 @@
    Функция возвращает сумму транзакции в нужной валюте currency: "RUB" или "USD" или "EUR"
    При этом используется вызов внешнего API из модуля **src/external_api**
 
+   
 7. Модуль **src/external_api**
    
    **convert_amount_by_currency(cur_from: str, cur_to: str, amount: float) -> float:**
