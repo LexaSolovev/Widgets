@@ -1,5 +1,5 @@
 import re
-from re import RegexFlag
+
 
 
 def filter_by_state(data: list[dict], state: str = 'EXECUTED') -> list[dict]:
@@ -26,7 +26,7 @@ def filter_by_description(transactions: list[dict], search_str: str) -> list[dic
     result = []
 
     for transaction in transactions:
-        description = transaction.get("description","")
+        description = transaction.get("description","").lower()
         if search_reg.match(description):
             result.append(transaction)
 
