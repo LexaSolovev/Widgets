@@ -152,7 +152,7 @@ def main():
 
             output_sum = f"Сумма: {transaction_sum} {transaction_currency_name}"
 
-            print(output_sum)
+            print(output_sum+"\n")
 
 
 if __name__ == "__main__":
