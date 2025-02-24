@@ -1,4 +1,5 @@
 import re
+from re import RegexFlag
 
 
 def filter_by_state(data: list[dict], state: str = 'EXECUTED') -> list[dict]:
@@ -21,7 +22,7 @@ def filter_by_description(transactions: list[dict], search_str: str) -> list[dic
     возвращает список транзакций, у которых описание содержит строку поиска
     """
     search_pattern = rf".*{search_str.lower()}.*"
-    search_reg = re.compile(pattern=search_pattern)
+    search_reg = re.compile(pattern=search_pattern, flags=re.IGNORECASE)
     result = []
 
     for transaction in transactions:
