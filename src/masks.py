@@ -54,7 +54,7 @@ def get_mask_account(account_number: str) -> str:
         raise TypeError("Номер счета должен быть строкой")
 
     # проверка, что номер счета соответствует формату
-    regex_card = re.compile(pattern="^[0-9]{9,18}$")
+    regex_card = re.compile(pattern="^[0-9]{9,20}$")
     if not regex_card.match(account_number):
         masks_logger.error(
             f"В процессе выполнения функции get_mask_account с параметром {account_number} произошла ошибка значения."
